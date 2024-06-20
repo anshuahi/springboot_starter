@@ -3,9 +3,12 @@ package org.anshuahi.SpringBlog.config;
 import java.util.List;
 
 import org.anshuahi.SpringBlog.models.Account;
+import org.anshuahi.SpringBlog.models.Authority;
 import org.anshuahi.SpringBlog.models.Post;
 import org.anshuahi.SpringBlog.services.AccountService;
+import org.anshuahi.SpringBlog.services.AuthorityService;
 import org.anshuahi.SpringBlog.services.PostService;
+import org.anshuahi.SpringBlog.utils.constants.Privillages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -19,8 +22,18 @@ public class SeedData implements CommandLineRunner {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private AuthorityService authorityService;
+
     @Override
     public void run(String... args) throws Exception {
+
+        for (Privillages auth : Privillages.values()) {
+            Authority authority = new Authority();
+            authority.setId(auth.getId());
+            authority.setName(auth.getPrivillage());
+            authorityService.save(authority);
+        }
 
         Account account01 = new Account();
         Account account02 = new Account();
