@@ -1,7 +1,6 @@
 package org.anshuahi.spring_starter.services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +31,7 @@ public class AccountService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<Account> optionalAccount = AccountRepository.findOneByEmailIgnoreCase(email);
+        Optional<Account> optionalAccount = accountRepository.findOneByEmailIgnoreCase(email);
         if (!optionalAccount.isPresent()) {
             throw new UsernameNotFoundException("Account not found");
         }

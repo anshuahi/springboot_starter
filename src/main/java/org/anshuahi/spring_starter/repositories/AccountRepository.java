@@ -10,9 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
-    public static Optional<Account> findOneByEmailIgnoreCase(String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findOneByEmailIgnoreCase'");
-    }
+    public Optional<Account> findOneByEmailIgnoreCase(String email);
 
 }
