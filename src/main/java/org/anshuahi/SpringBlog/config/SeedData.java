@@ -1,6 +1,8 @@
 package org.anshuahi.SpringBlog.config;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.anshuahi.SpringBlog.models.Account;
 import org.anshuahi.SpringBlog.models.Authority;
@@ -9,6 +11,7 @@ import org.anshuahi.SpringBlog.services.AccountService;
 import org.anshuahi.SpringBlog.services.AuthorityService;
 import org.anshuahi.SpringBlog.services.PostService;
 import org.anshuahi.SpringBlog.utils.constants.Privillages;
+import org.anshuahi.SpringBlog.utils.constants.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -37,18 +40,42 @@ public class SeedData implements CommandLineRunner {
 
         Account account01 = new Account();
         Account account02 = new Account();
-        account01.setEmail("account01@anshuahi.com");
-        account01.setPassword("password01");
-        account01.setFirstname("Account 01");
-        account01.setLastname("lastname 1");
+        Account account03 = new Account();
+        Account account04 = new Account();
 
-        account02.setEmail("account02@anshuahi.com");
-        account02.setPassword("password02");
-        account02.setFirstname("Account 02");
-        account02.setLastname("lastname 2");
+        account01.setEmail("user@user.com");
+        account01.setPassword("user123");
+        account01.setFirstname("User");
+        account01.setLastname("lastname");
+
+        account02.setEmail("admin@admin.com");
+        account02.setPassword("admin123");
+        account02.setFirstname("Admin");
+        account02.setLastname("adlast");
+        account02.setRole(Roles.ADMIN.getRole());
+
+        account03.setEmail("editor@editor.com");
+        account03.setPassword("editor123");
+        account03.setFirstname("Editor");
+        account03.setLastname("edLast");
+        account03.setRole(Roles.EDITOR.getRole());
+
+        account04.setEmail("super-admin@super.com");
+        account04.setPassword("pass123");
+        account04.setFirstname("super_editor");
+        account04.setLastname("lastname");
+        account04.setRole(Roles.EDITOR.getRole());
+
+        Set<Authority> authorities = new HashSet<>();
+        authorityService.findById(Privillages.RESET_ANY_USER_PASSWORD.getId()).ifPresent(authorities::add);
+        authorityService.findById(Privillages.ACCESS_ADMIN_PANEL.getId()).ifPresent(authorities::add);
+
+        account04.setAuthorities(authorities);
 
         accountService.save(account01);
         accountService.save(account02);
+        accountService.save(account03);
+        accountService.save(account04);
 
         List<Post> posts = postService.getAll();
         if (posts.size() == 0) {
