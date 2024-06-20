@@ -40,20 +40,17 @@
                                 <a class="nav-link" href="profile">Profile</a>
                             </li>
                         </span>
+                        <span sec:authorize="isAuthenticated()">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout">Logout</a>
+                            </li>
+                        </span>
+                        <span sec:authorize="hasRole('ROLE_ADMIN')">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/admin">Admin</a>
+                            </li>
+                        </span>
                     </ul>
-                    <div class="user_option">
-                        <a href="" class="user_link">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                        </a>
-                        <form class="form-inline">
-                            <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </button>
-                        </form>
-                        <a href="" class="order_online">
-                            Order Online
-                        </a>
-                    </div>
                 </div>
             </nav>
         </div>
