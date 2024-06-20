@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.anshuahi.SpringBlog.models.Account;
+import org.anshuahi.SpringBlog.models.Authority;
 import org.anshuahi.SpringBlog.repositories.AccountRepository;
 import org.anshuahi.SpringBlog.utils.constants.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,12 @@ public class AccountService implements UserDetailsService {
 
         Account account = optionalAccount.get();
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority(account.getRole()));
+        // grantedAuthorities.add(new SimpleGrantedAuthority(account.getRole()));
+
+        for (Authority authority : account.getAuthorities()) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(authority.getName()));
+        }
+
         return new User(account.getEmail(), account.getPassword(), grantedAuthorities);
     }
 
